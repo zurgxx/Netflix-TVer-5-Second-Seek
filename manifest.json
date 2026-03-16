@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Netflix/TVer 5 Second Seek",
+  "version": "1.0.0",
+  "description": "Netflix と TVer の再生画面で左右キーのシーク秒数を 5 秒に変更します。",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "netflix-page.js"
+      ],
+      "matches": [
+        "https://www.netflix.com/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.netflix.com/*",
+        "https://tver.jp/*",
+        "https://www.tver.jp/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}
