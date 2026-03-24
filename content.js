@@ -56,8 +56,34 @@
     return score;
   }
 
+  function collectVideosFromRoot(root, videos, visitedRoots) {
+    if (!root || visitedRoots.has(root)) {
+      return;
+    }
+
+    visitedRoots.add(root);
+
+    if (typeof root.querySelectorAll === "function") {
+      root.querySelectorAll("video").forEach((video) => {
+        videos.push(video);
+      });
+    }
+
+    if (typeof root.querySelectorAll !== "function") {
+      return;
+    }
+
+    root.querySelectorAll("*").forEach((element) => {
+      if (element.shadowRoot) {
+        collectVideosFromRoot(element.shadowRoot, videos, visitedRoots);
+      }
+    });
+  }
+
   function getActiveVideo() {
-    const videos = Array.from(document.querySelectorAll("video"));
+    const videos = [];
+    collectVideosFromRoot(document, videos, new WeakSet());
+
     if (videos.length === 0) {
       return null;
     }

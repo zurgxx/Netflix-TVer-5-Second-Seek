@@ -1,6 +1,6 @@
-# Netflix/TVer 5 Second Seek
+# Netflix/TVer/DOWNTOWN+ 5 Second Seek
 
-Netflix と TVer のブラウザ再生画面で、キーボードの左右キーによるシーク秒数を 10 秒ではなく 5 秒にする Chrome Extension です。
+Netflix、TVer、DOWNTOWN+ のブラウザ再生画面で、キーボードの左右キーによるシーク秒数を 10 秒ではなく 5 秒にする Chrome Extension です。
 
 ## 概要
 
@@ -15,7 +15,7 @@ Netflix と TVer のブラウザ再生画面で、キーボードの左右キー
 2. 右上の「デベロッパー モード」を有効にします。
 3. 「パッケージ化されていない拡張機能を読み込む」を押します。
 4. このフォルダを選択します。
-5. Netflix または TVer の動画再生ページを開き、左右キーで 5 秒シークされることを確認します。
+5. Netflix、TVer、または DOWNTOWN+ の動画再生ページを開き、左右キーで 5 秒シークされることを確認します。
 
 拡張を更新した後は、`chrome://extensions` で対象拡張の再読み込みを行ってください。
 
@@ -24,6 +24,8 @@ Netflix と TVer のブラウザ再生画面で、キーボードの左右キー
 - `https://www.netflix.com/*`
 - `https://tver.jp/*`
 - `https://www.tver.jp/*`
+- `https://downtownplus.com/*`
+- `https://www.downtownplus.com/*`
 
 ## 実装メモ
 
@@ -31,12 +33,14 @@ Netflix と TVer のブラウザ再生画面で、キーボードの左右キー
 - 複数の `video` 要素がある場合は、表示サイズ、表示状態、再生状態、読み込み状態を元に「実際に再生に使われていそうな video」を優先して選びます。
 - `currentTime` 更新時は 0 未満や `duration` 超過にならないよう clamp しています。
 - Netflix は `video.currentTime` の直接変更で再生エラーになる場合があるため、ページ本体側で左右キーを捕まえ、プレイヤー API を使ってシークしています。
+- DOWNTOWN+ のようにプレイヤーが open shadow DOM 配下にある場合でも `video` 要素を探索できるようにしています。
 - サイト側の既定ショートカットで 10 秒シークが残る場合に備え、キャプチャフェーズで `keydown` を拾い、`preventDefault()` と `stopImmediatePropagation()` を使って二重シークを抑止しています。
 
 ## 制限事項
 
 - サイト側の実装変更で動かなくなる可能性があります。
 - TVer は広告再生中や特殊なプレイヤー状態では期待通り動かない場合があります。
+- DOWNTOWN+ はプレイヤー SDK 側の実装が変わると、`video` 要素を検出できなくなる可能性があります。
 - Netflix はプレイヤー内部実装の変更で専用ブリッジが効かなくなる可能性があります。
 - サイト側が別のイベント処理や独自プレイヤー制御を追加した場合、左右キーの挙動を完全には上書きできないことがあります。
 - `SEEK_SECONDS` は現時点では定数です。UI からの変更には未対応です。
