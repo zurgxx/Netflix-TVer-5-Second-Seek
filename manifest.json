@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Netflix/TVer/DOWNTOWN+ 5 Second Seek",
+  "name": "Netflix/TVer/DOWNTOWN+/ABEMA 5 Second Seek",
   "version": "1.0.0",
-  "description": "Netflix、TVer、DOWNTOWN+ の再生画面で左右キーのシーク秒数を 5 秒に変更します。",
+  "description": "Netflix、TVer、DOWNTOWN+、ABEMA の再生画面で左右キーのシーク秒数を 5 秒に変更します。",
   "web_accessible_resources": [
     {
       "resources": [
@@ -20,7 +20,9 @@
         "https://tver.jp/*",
         "https://www.tver.jp/*",
         "https://downtownplus.com/*",
-        "https://www.downtownplus.com/*"
+        "https://www.downtownplus.com/*",
+        "https://abema.tv/*",
+        "https://www.abema.tv/*"
       ],
       "js": [
         "content.js"
